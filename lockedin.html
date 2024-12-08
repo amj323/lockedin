@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Between Dates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p id="result"></p>
+
+    <script>
+        // Function to calculate the difference between October 5, 2024 and today, adding 1 month
+        function calculateDateDifference() {
+            const startDate = new Date('2024-10-05'); // October 5, 2024
+            const currentDate = new Date(); // Today's date
+            
+            // Calculate the difference in milliseconds
+            const timeDifference = currentDate - startDate;
+
+            // Calculate the difference in years and months
+            let years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+            let months = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+
+            // Add 1 month to the months value
+            months += 1;
+
+            // Adjust for any overflow in months (if months >= 12, increase years and reset months)
+            if (months >= 12) {
+                years += 1;
+                months -= 12;
+            }
+
+            // Build the result string
+            let result = "";
+            if (years > 0) {
+                result += years + " year" + (years > 1 ? "s" : ""); // Singular or plural for years
+            }
+            if (months > 0) {
+                if (years > 0) result += " and "; // Add "and" if years are included
+                result += months + " month" + (months > 1 ? "s" : ""); // Singular or plural for months
+            }
+
+            // If there is no time difference, display "Less than a month"
+            if (years === 0 && months === 0) {
+                result = "Less than a month";
+            }
+
+            // Display the result on the page
+            document.getElementById('result').textContent = result;
+        }
+
+        // Run the function when the page loads
+        window.onload = calculateDateDifference;
+    </script>
+</body>
+</html>
